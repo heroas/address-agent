@@ -1,0 +1,36 @@
+<v-app id="app">
+
+  <v-toolbar color="indigo" dark fixed app>
+    <v-toolbar-title>Address Agent</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn color="indigo" dark @click="importJson">
+       <v-icon dark>backup</v-icon>&nbsp;Import
+    </v-btn>
+  </v-toolbar>
+
+  <v-content>
+    <v-container fluid fill-height>
+      <v-layout justify-center align-center>
+        <v-card-text style="height:90%; position: relative">
+          <form enctype="multipart/form-data">
+            <div class="dropbox">
+              <input type="file" hidden ref="inputBtn" @change="filesChange($event); fileCount = $event.target.files.length" class="input-file">
+            </div>
+          </form>
+
+          {{importedJson}}
+
+          <v-fab-transition>
+            <v-btn @click="showJson" color="green" dark absolute bottom right v-show="!hidden">
+              <v-icon>add</v-icon>
+            </v-btn>
+          </v-fab-transition>
+        </v-card-text>
+      </v-layout>
+    </v-container>
+  </v-content>
+
+  <v-footer color="indigo" app>
+    <span class="white--text">&copy; 2017</span>
+  </v-footer>
+</v-app>
