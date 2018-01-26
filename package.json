@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "vue": "^2.5.3",
+    "vue-currency-filter": "^2.1.0",
     "vuetify": "^0.17.4"
   },
   "devDependencies": {

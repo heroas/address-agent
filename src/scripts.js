@@ -56,7 +56,8 @@ export default {
         "avatar": coinInfo.avatar,
         "title": coinInfo.symbol,
         "subtitle": coinInfo.name,
-        "address": address
+        "address": address,
+        "worth": 12000
       });
       this.addressBook.push({
         "divider": true,
