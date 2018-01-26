@@ -2,21 +2,28 @@ import axios from 'axios';
 export default {
   data() {
     let icons = {
-      1: '../public/btc.png',
-      2: '../public/eth.png'
+      'BTC': '../public/btc.png',
+      'ETH': '../public/eth.png'
     }
 
     return {
       hidden: false,
       importedJson: 'x',
       addDialog: false,
-      newCoin :null,
+      newCoin: null,
       newAddress: null,
-      supportedCoins: [
-          { name: 'BTC', group: 'Bitcoin', avatar: icons[1] },
-          { name: 'ETH', group: 'Ethereum', avatar: icons[2] }
-        ],
-      addressBook:[]
+      supportedCoins: [{
+          symbol: 'BTC',
+          name: 'Bitcoin',
+          avatar: icons['BTC']
+        },
+        {
+          symbol: 'ETH',
+          name: 'Ethereum',
+          avatar: icons['ETH']
+        }
+      ],
+      addressBook: []
     }
   },
   methods: {
@@ -40,13 +47,34 @@ export default {
       reader.readAsText(file);
 
     },
-    addAddress() {
-      console.log(this.newCoin);
-      console.log(this.newAddress);
-      this.addressBook.push({"coin":this.newCoin,"address":this.newAddress});
+    addAddress(coin, address) {
+      console.log(coin);
+      var coinInfo = this.searchForCoin(coin);
+      console.log(coinInfo);
+
+      this.addressBook.push({
+        "avatar": coinInfo.avatar,
+        "title": coinInfo.symbol,
+        "subtitle": coinInfo.name,
+        "address": address
+      });
+      this.addressBook.push({
+        "divider": true,
+        "inset": true
+      })
     },
-    testerButton(){
-      console.log(this.addressBook[0].Coin);
+    searchForCoin(coinSymbol) {
+      var i = null;
+      for (i = 0; this.supportedCoins.length > i; i += 1) {
+        if (this.supportedCoins[i].symbol === coinSymbol) {
+          return this.supportedCoins[i];
+        }
+      }
+    },
+    testerButton() {
+      console.log(this.addressBook[0].avatar);
+      console.log(this.addressBook[0].address);
+
     }
   },
   created: function() {

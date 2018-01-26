@@ -34,24 +34,24 @@
                   <v-layout wrap>
                     <v-flex xs12 sm6 md5>
 
-                      <v-select label="Coin" v-bind:items="supportedCoins" v-model="newCoin" item-text="name" item-value="name" chips required max-height="auto" autocomplete>
+                      <v-select label="Coin" v-bind:items="supportedCoins" v-model="newCoin" item-text="symbol" item-value="symbol" chips required max-height="auto" autocomplete>
                         <template slot="selection" slot-scope="data">
                             <v-chip @input="data.parent.selectItem(data.item)" :selected="data.selected" class="chip--select-multi" :key="JSON.stringify(data.item)">
                               <v-avatar> <img :src="data.item.avatar"></v-avatar>
-                                {{ data.item.name }}
+                                {{ data.item.symbol }}
                             </v-chip>
                         </template>
                         <template slot="item" slot-scope="data">
                           <template v-if="typeof data.item !== 'object'">
                             <v-list-tile-content v-text="data.item"></v-list-tile-content>
                           </template>
-                          <template v-else>
+                        <template v-else>
                             <v-list-tile-avatar>
                               <img v-bind:src="data.item.avatar"/>
                             </v-list-tile-avatar>
                             <v-list-tile-content>
-                              <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                              <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                              <v-list-tile-title v-html="data.item.symbol"></v-list-tile-title>
+                              <v-list-tile-sub-title v-html="data.item.name"></v-list-tile-sub-title>
                             </v-list-tile-content>
                           </template>
                         </template>
@@ -68,13 +68,27 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="addDialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="addAddress">Add</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="addAddress(newCoin,newAddress)">Add</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
 
           {{importedJson}}
-
+          <v-list two-line>
+            <template v-for="item in addressBook">
+                      <v-subheader v-if="item.header" v-text="item.header"></v-subheader>
+                      <v-divider v-else-if="item.divider" v-bind:inset="item.inset"></v-divider>
+                      <v-list-tile avatar v-else v-bind:key="item.title" @click="">
+                        <v-list-tile-avatar>
+                          <img v-bind:src="item.avatar">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                          <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                          <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </template>
+          </v-list>
           <v-fab-transition>
 
           </v-fab-transition>
