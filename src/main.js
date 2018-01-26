@@ -3,6 +3,7 @@ import App from './App.vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import VueCurrencyFilter from 'vue-currency-filter'
+import VueCookies from 'vue-cookies'
 
 Vue.use(Vuetify)
 Vue.use(VueCurrencyFilter,
@@ -14,6 +15,7 @@ Vue.use(VueCurrencyFilter,
   symbolPosition: 'front',
   symbolSpacing: true
 })
+Vue.use(VueCookies)
 
 new Vue({
   el: '#app',

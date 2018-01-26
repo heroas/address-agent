@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "mdi": "^2.1.19",
     "vue": "^2.5.3",
+    "vue-cookies": "^1.5.4",
     "vue-currency-filter": "^2.1.0",
     "vuetify": "^0.17.4"
   },

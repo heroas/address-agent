@@ -7,7 +7,7 @@ export default {
     }
 
     return {
-      hidden: false,
+      saveCookie: false,
       importedJson: 'x',
       addDialog: false,
       newCoin: null,
@@ -73,9 +73,12 @@ export default {
       }
     },
     testerButton() {
-      console.log(this.addressBook[0].avatar);
-      console.log(this.addressBook[0].address);
-
+      // console.log(this.addressBook[0].avatar);
+      // console.log(this.addressBook[0].address);
+      // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+      // console.log(x)
+      var x = this.$cookies.get('addressBook');
+      console.log(JSON.parse(x));
     }
   },
   created: function() {
