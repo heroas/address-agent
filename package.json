@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "graceful-fs": "^4.1.11",
-    "load-json-file": "^4.0.0",
     "vue": "^2.5.3",
     "vuetify": "^0.17.4"
   },

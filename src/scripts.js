@@ -1,40 +1,34 @@
 import axios from 'axios';
 export default {
   data() {
+    let icons = {
+      1: '../public/btc.png',
+      2: '../public/eth.png'
+    }
+
     return {
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
-      hidden: true,
-      importedJson: 'x'
+      hidden: false,
+      importedJson: 'x',
+      addDialog: false,
+      newCoin :null,
+      newAddress: null,
+      supportedCoins: [
+          { name: 'BTC', group: 'Bitcoin', avatar: icons[1] },
+          { name: 'ETH', group: 'Ethereum', avatar: icons[2] }
+        ],
+      addressBook:[]
     }
   },
   methods: {
     importJson() {
       this.hidden = !this.hidden;
       this.$refs.inputBtn.click();
-      console.log(this.$refs);
-    },
-    save(formData) {
-      // upload data to the server
-      console.log(formData);
     },
     filesChange(event) {
-
       var files = event.target.files || event.dataTransfer.files;
       if (!files.length)
         return;
-
       this.createInput(files[0]);
-
     },
     createInput(file) {
       var reader = new FileReader();
@@ -46,9 +40,13 @@ export default {
       reader.readAsText(file);
 
     },
-    showJson(){
-      var hi = JSON.parse(this.importedJson);
-      console.log(hi);
+    addAddress() {
+      console.log(this.newCoin);
+      console.log(this.newAddress);
+      this.addressBook.push({"coin":this.newCoin,"address":this.newAddress});
+    },
+    testerButton(){
+      console.log(this.addressBook[0].Coin);
     }
   },
   created: function() {

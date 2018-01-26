@@ -4,7 +4,7 @@
     <v-toolbar-title>Address Agent</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn color="indigo" dark @click="importJson">
-       <v-icon dark>backup</v-icon>&nbsp;Import
+      <v-icon dark>backup</v-icon>&nbsp;Import
     </v-btn>
   </v-toolbar>
 
@@ -17,13 +17,66 @@
               <input type="file" hidden ref="inputBtn" @change="filesChange($event); fileCount = $event.target.files.length" class="input-file">
             </div>
           </form>
+          <v-btn color="red" @click="testerButton" dark absolute bottom left>
+            <v-icon>add</v-icon>
+          </v-btn>
+
+          <v-dialog v-model="addDialog" persistent max-width="500px">
+            <v-btn color="green" dark absolute bottom right slot="activator">
+              <v-icon>add</v-icon>
+            </v-btn>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Add</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container grid-list-md>
+                  <v-layout wrap>
+                    <v-flex xs12 sm6 md5>
+
+                      <v-select label="Coin" v-bind:items="supportedCoins" v-model="newCoin" item-text="name" item-value="name" chips required max-height="auto" autocomplete>
+                        <template slot="selection" slot-scope="data">
+                            <v-chip @input="data.parent.selectItem(data.item)" :selected="data.selected" class="chip--select-multi" :key="JSON.stringify(data.item)">
+                              <v-avatar> <img :src="data.item.avatar"></v-avatar>
+                                {{ data.item.name }}
+                            </v-chip>
+                        </template>
+                        <template slot="item" slot-scope="data">
+                          <template v-if="typeof data.item !== 'object'">
+                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                          </template>
+                          <template v-else>
+                            <v-list-tile-avatar>
+                              <img v-bind:src="data.item.avatar"/>
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                              <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                              <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                          </template>
+                        </template>
+                      </v-select>
+
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field label="Address" v-model="newAddress" required></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" flat @click.native="addDialog = false">Close</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="addAddress">Add</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
 
           {{importedJson}}
 
           <v-fab-transition>
-            <v-btn @click="showJson" color="green" dark absolute bottom right v-show="!hidden">
-              <v-icon>add</v-icon>
-            </v-btn>
+
           </v-fab-transition>
         </v-card-text>
       </v-layout>
