@@ -29,7 +29,8 @@ export default {
       ],
       addressBook: [],
       test: '',
-      test2: ''
+      test2: '',
+      total: 0
     }
   },
   methods: {
@@ -54,9 +55,7 @@ export default {
 
     },
     addAddress(coin, address) {
-      console.log(coin);
       var coinInfo = this.searchForCoin(coin);
-      console.log(coinInfo);
 
       this.addressBook.push({
         "avatar": coinInfo.avatar,
@@ -78,6 +77,36 @@ export default {
         }
       }
     },
+    getValueOfAddressBook() {
+      for (var i = 0, len = this.addressBook.length; i < len; i++) {
+        console.log(this.addressBook[i]);
+
+      }
+
+    },
+    getValueOfAddress(address,coinName,bookPosition){
+      if(coinName==='Ethereum'){
+        BlockchainApis.ethApi(address)
+          .then(response => {
+            var balance = CryptoConverter.getEthBalance(response.data.balance);
+            CoinToUsd.getUsd(coinName).then(response => {
+              this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
+                        this.total += parseInt(this.addressBook[bookPosition].worth);
+            })
+          });
+      }
+      if(coinName === 'Bitcoin'){
+        BlockchainApis.btcApi(address)
+          .then(response => {
+            var balance = CryptoConverter.getBtcBalance(response.data.balance);
+            CoinToUsd.getUsd(coinName).then(response => {
+              this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
+              this.total += parseInt(this.addressBook[bookPosition].worth);
+            })
+          });
+      }
+
+    },
     testerButton() {
       // console.log(this.addressBook[0].avatar);
       // console.log(this.addressBook[0].address);
@@ -86,17 +115,24 @@ export default {
       // console.log(x)
       // var x = this.$cookies.get('addressBook');
       // console.log(JSON.parse(x));
-
-      console.log(this.test2);
+      this.total = 0;
+      for (var i = 0, len = this.addressBook.length; i < len; i++) {
+        if(!this.addressBook[i].divider){
+          console.log(this.addressBook[i]);
+          this.getValueOfAddress(this.addressBook[i].address,this.addressBook[i].subtitle,i);
+          console.log(this.addressBook)
+        }
+      }
+      //console.log(this.test2);
     }
   },
   created: function() {
-    var final = 'x'
+    var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
     BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
       .then(response => {
         var balance = CryptoConverter.getEthBalance(response.data.balance);
         CoinToUsd.getUsd('Ethereum').then(response => {
-          this.test2 = (response.data[0].price_usd * balance).toFixed(2);
+          return (response.data[0].price_usd * balance).toFixed(2);
         })
       });
     //Services.getAgencies('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
