@@ -1,4 +1,8 @@
 import axios from 'axios';
+import BlockchainApis from './services/blockchainApis'
+import CryptoConverter from './services/cryptoConverter'
+import CoinToUsd from './services/balanceToUsd'
+
 export default {
   data() {
     let icons = {
@@ -23,7 +27,9 @@ export default {
           avatar: icons['ETH']
         }
       ],
-      addressBook: []
+      addressBook: [],
+      test: '',
+      test2: ''
     }
   },
   methods: {
@@ -76,13 +82,34 @@ export default {
       // console.log(this.addressBook[0].avatar);
       // console.log(this.addressBook[0].address);
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+      // this.$cookies.isKey(keyName)
       // console.log(x)
-      var x = this.$cookies.get('addressBook');
-      console.log(JSON.parse(x));
+      // var x = this.$cookies.get('addressBook');
+      // console.log(JSON.parse(x));
+
+      console.log(this.test2);
     }
   },
   created: function() {
-
+    var final = 'x'
+    BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
+      .then(response => {
+        var balance = CryptoConverter.getEthBalance(response.data.balance);
+        CoinToUsd.getUsd('Ethereum').then(response => {
+          this.test2 = (response.data[0].price_usd * balance).toFixed(2);
+        })
+      });
+    //Services.getAgencies('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
+    // axios.get(balanceService.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157'))
+    //   .then(response => {
+    //
+    //
+    //     console.log(weiToETH)
+    //     this.test =  weiToETH
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //   })
   }
 
 }
