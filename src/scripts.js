@@ -11,7 +11,6 @@ export default {
     }
 
     return {
-      saveCookie: false,
       importedJson: 'x',
       addDialog: false,
       newCoin: null,
@@ -98,7 +97,7 @@ export default {
       if (coinName === 'Ethereum') {
         BlockchainApis.ethApi(address)
           .then(response => {
-            var balance = CryptoConverter.getEthBalance(response.data.balance);
+            var balance = CryptoConverter.getEthBalance(response.data.result);
             CoinToUsd.getUsd(coinName).then(response => {
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
               this.total += parseInt(this.addressBook[bookPosition].worth);
@@ -137,6 +136,8 @@ export default {
     }
   },
   created: function() {
+    this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
+    this.getValueOfAddressBook();
     // var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
     // BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
     //   .then(response => {
