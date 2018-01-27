@@ -6,8 +6,9 @@
     {{total | currency}}
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat>
-        <v-icon dark>save</v-icon>&nbsp;&nbsp;Save to Browser</v-btn>
+      <v-btn flat @click="saveCookie">
+        <v-icon dark>save</v-icon>&nbsp;&nbsp;Save to Browser
+      </v-btn>
     </v-toolbar-items>
     <v-btn color="indigo" dark @click="importJson">
       <v-icon dark>mdi-file-export</v-icon>&nbsp;Export

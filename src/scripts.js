@@ -54,6 +54,9 @@ export default {
       reader.readAsText(file);
 
     },
+    saveCookie() {
+      this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+    },
     addAddress(coin, address) {
       var coinInfo = this.searchForCoin(coin);
 
@@ -83,26 +86,26 @@ export default {
     getValueOfAddressBook() {
       this.total = 0;
       for (var i = 0, len = this.addressBook.length; i < len; i++) {
-        if(!this.addressBook[i].divider){
+        if (!this.addressBook[i].divider) {
           console.log(this.addressBook[i]);
-          this.getValueOfAddress(this.addressBook[i].address,this.addressBook[i].subtitle,i);
+          this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].subtitle, i);
           console.log(this.addressBook)
         }
       }
 
     },
-    getValueOfAddress(address,coinName,bookPosition){
-      if(coinName==='Ethereum'){
+    getValueOfAddress(address, coinName, bookPosition) {
+      if (coinName === 'Ethereum') {
         BlockchainApis.ethApi(address)
           .then(response => {
             var balance = CryptoConverter.getEthBalance(response.data.balance);
             CoinToUsd.getUsd(coinName).then(response => {
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
-                        this.total += parseInt(this.addressBook[bookPosition].worth);
+              this.total += parseInt(this.addressBook[bookPosition].worth);
             })
           });
       }
-      if(coinName === 'Bitcoin'){
+      if (coinName === 'Bitcoin') {
         BlockchainApis.btcApi(address)
           .then(response => {
             var balance = CryptoConverter.getBtcBalance(response.data.balance);
@@ -120,16 +123,16 @@ export default {
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
-      // var x = this.$cookies.get('addressBook');
-      // console.log(JSON.parse(x));
-      this.total = 0;
-      for (var i = 0, len = this.addressBook.length; i < len; i++) {
-        if(!this.addressBook[i].divider){
-          console.log(this.addressBook[i]);
-          this.getValueOfAddress(this.addressBook[i].address,this.addressBook[i].subtitle,i);
-          console.log(this.addressBook)
-        }
-      }
+      var x = this.$cookies.get('addressBook');
+      console.log(JSON.parse(x));
+      // this.total = 0;
+      // for (var i = 0, len = this.addressBook.length; i < len; i++) {
+      //   if (!this.addressBook[i].divider) {
+      //     console.log(this.addressBook[i]);
+      //     this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].subtitle, i);
+      //     console.log(this.addressBook)
+      //   }
+      // }
       //console.log(this.test2);
     }
   },
