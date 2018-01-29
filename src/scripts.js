@@ -137,7 +137,12 @@ export default {
   },
   created: function() {
     this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
-    this.getValueOfAddressBook();
+    if(this.addressBook){
+      this.getValueOfAddressBook();
+    }
+    else{
+      this.addressBook = [];
+    }
     // var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
     // BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
     //   .then(response => {
