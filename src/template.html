@@ -10,10 +10,11 @@
         <v-icon dark>save</v-icon>&nbsp;&nbsp;Save to Browser
       </v-btn>
     </v-toolbar-items>
-    <v-btn color="indigo" dark @click="importJson">
+    <a href="" download="data.json" hidden ref="downloadLink">download JSON</a>
+    <v-btn color="indigo" dark @click="exportAddressBook" download="data.json">
       <v-icon dark>mdi-file-export</v-icon>&nbsp;Export
     </v-btn>
-    <v-btn color="indigo" dark @click="importJson">
+    <v-btn color="indigo" dark @click="importAddressBook">
       <v-icon dark>mdi-file-import</v-icon>&nbsp;Import
     </v-btn>
   </v-toolbar>
@@ -82,8 +83,6 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-
-          {{importedJson}}
           <v-list two-line>
             <template v-for="item in addressBook">
                       <v-subheader v-if="item.header" v-text="item.header"></v-subheader>

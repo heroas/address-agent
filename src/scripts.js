@@ -2,6 +2,7 @@ import axios from 'axios';
 import BlockchainApis from './services/blockchainApis'
 import CryptoConverter from './services/cryptoConverter'
 import CoinToUsd from './services/balanceToUsd'
+import Utilities from './services/utilities'
 
 export default {
   data() {
@@ -33,8 +34,7 @@ export default {
     }
   },
   methods: {
-    importJson() {
-      this.hidden = !this.hidden;
+    importAddressBook() {
       this.$refs.inputBtn.click();
     },
     filesChange(event) {
@@ -48,13 +48,31 @@ export default {
       var vm = this;
       reader.onload = (e) => {
         vm.importedJson = reader.result;
-        console.log(vm.importedJson)
+        try {
+          var parsedJson = JSON.parse(vm.importedJson)
+          if (Utilities.checkIfAddressBook(parsedJson)){
+            this.addressBook = parsedJson;
+            this.getValueOfAddressBook();
+          }
+          else{
+            console.log('Not an addressBook')
+          }
+        } catch (e) {
+          console.log('Bad Json file bro')
+        }
+
       }
       reader.readAsText(file);
-
     },
     saveCookie() {
       this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+    },
+    exportAddressBook() {
+      this.test = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.addressBook));
+      this.$refs.downloadLink.setAttribute("href", "data:" + this.test)
+      console.log(this.$refs.downloadLink)
+      this.$refs.downloadLink.click();
+
     },
     addAddress(coin, address) {
       var coinInfo = this.searchForCoin(coin);
@@ -122,8 +140,7 @@ export default {
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
-      var x = this.$cookies.get('addressBook');
-      console.log(JSON.parse(x));
+      console.log(this.addressBook)
       // this.total = 0;
       // for (var i = 0, len = this.addressBook.length; i < len; i++) {
       //   if (!this.addressBook[i].divider) {
@@ -137,10 +154,9 @@ export default {
   },
   created: function() {
     this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
-    if(this.addressBook){
+    if (this.addressBook) {
       this.getValueOfAddressBook();
-    }
-    else{
+    } else {
       this.addressBook = [];
     }
     // var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
