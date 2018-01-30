@@ -101,9 +101,10 @@
                       </v-list-tile>
                     </template>
           </v-list>
-          <v-fab-transition>
-
-          </v-fab-transition>
+          <v-snackbar color="cyan" multi-line v-model="snackbar">
+            {{ snackBarText }}
+            <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+          </v-snackbar>
         </v-card-text>
       </v-layout>
     </v-container>

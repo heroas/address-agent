@@ -30,7 +30,9 @@ export default {
       addressBook: [],
       test: '',
       test2: '',
-      total: 0
+      total: 0,
+      snackbar: false,
+      snackBarText: ''
     }
   },
   methods: {
@@ -52,6 +54,8 @@ export default {
           var parsedJson = JSON.parse(vm.importedJson)
           if (Utilities.checkIfAddressBook(parsedJson)){
             this.addressBook = parsedJson;
+            this.snackBarText = "Address book succesfully imported!"
+            this.snackbar = true
             this.getValueOfAddressBook();
           }
           else{
@@ -65,7 +69,14 @@ export default {
       reader.readAsText(file);
     },
     saveCookie() {
-      this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+      try{
+        this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
+        this.snackBarText = "Address book succesfully saved to the browser!"
+        this.snackbar = true
+      }
+      catch(e){
+
+      }
     },
     exportAddressBook() {
       this.test = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.addressBook));
@@ -90,6 +101,8 @@ export default {
       })
 
       this.getValueOfAddressBook();
+      this.snackBarText = coinInfo.name + " address succesfuly added!"
+      this.snackbar = true
       this.addDialog = false
     },
     searchForCoin(coinSymbol) {
