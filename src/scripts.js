@@ -92,8 +92,8 @@ export default {
 
       this.addressBook.push({
         "avatar": coinInfo.avatar,
-        "title": coinInfo.symbol,
-        "subtitle": coinInfo.name,
+        "symbol": coinInfo.symbol,
+        "name": coinInfo.name,
         "address": address,
         "worth": 0,
         "balance": 0
@@ -113,6 +113,15 @@ export default {
       this.selectedAddress = address;
       this.editAddressDialog = true;
     },
+    removeAddress(){
+      var i = null;
+      for (i = 0; this.addressBook.length > i; i += 1) {
+        if (this.addressBook[i].address === this.selectedAddress.address) {
+          this.addressBook.splice(i,1)
+        }
+      }
+      this.editAddressDialog = false;
+    },
     searchForCoin(coinSymbol) {
       var i = null;
       for (i = 0; this.supportedCoins.length > i; i += 1) {
@@ -126,7 +135,7 @@ export default {
       for (var i = 0, len = this.addressBook.length; i < len; i++) {
         if (!this.addressBook[i].divider) {
           console.log(this.addressBook[i]);
-          this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].subtitle, i);
+          this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].name, i);
           console.log(this.addressBook)
         }
       }
@@ -140,7 +149,7 @@ export default {
             CoinToUsd.getUsd(coinName).then(response => {
               this.addressBook[bookPosition].balance = balance.toFixed(2);
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
-              this.total += parseInt(this.addressBook[bookPosition].worth);
+              this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
           });
       }
@@ -151,7 +160,7 @@ export default {
             CoinToUsd.getUsd(coinName).then(response => {
               this.addressBook[bookPosition].balance = balance.toFixed(2);
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
-              this.total += parseInt(this.addressBook[bookPosition].worth);
+              this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
           });
       }
