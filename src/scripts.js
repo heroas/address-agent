@@ -121,6 +121,7 @@ export default {
         }
       }
       this.editAddressDialog = false;
+      this.getValueOfAddressBook();
     },
     searchForCoin(coinSymbol) {
       var i = null;
