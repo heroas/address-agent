@@ -14,6 +14,7 @@ export default {
     return {
       importedJson: 'x',
       addDialog: false,
+      editAddress: false,
       newCoin: null,
       newAddress: null,
       supportedCoins: [{
@@ -28,6 +29,7 @@ export default {
         }
       ],
       addressBook: [],
+      selectedAddress : {},
       test: '',
       test2: '',
       total: 0,
@@ -93,7 +95,8 @@ export default {
         "title": coinInfo.symbol,
         "subtitle": coinInfo.name,
         "address": address,
-        "worth": 12000
+        "worth": 0,
+        "balance": 0
       });
       this.addressBook.push({
         "divider": true,
@@ -130,6 +133,7 @@ export default {
           .then(response => {
             var balance = CryptoConverter.getEthBalance(response.data.result);
             CoinToUsd.getUsd(coinName).then(response => {
+              this.addressBook[bookPosition].balance = balance.toFixed(2);
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
               this.total += parseInt(this.addressBook[bookPosition].worth);
             })
@@ -140,6 +144,7 @@ export default {
           .then(response => {
             var balance = CryptoConverter.getBtcBalance(response.data.balance);
             CoinToUsd.getUsd(coinName).then(response => {
+              this.addressBook[bookPosition].balance = balance.toFixed(2);
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
               this.total += parseInt(this.addressBook[bookPosition].worth);
             })
@@ -147,13 +152,16 @@ export default {
       }
 
     },
-    testerButton() {
+    testerButton(address) {
       // console.log(this.addressBook[0].avatar);
       // console.log(this.addressBook[0].address);
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
       console.log(this.addressBook)
+      console.log(address)
+      this.selectedAddress = address;
+      this.editAddress = true;
       // this.total = 0;
       // for (var i = 0, len = this.addressBook.length; i < len; i++) {
       //   if (!this.addressBook[i].divider) {

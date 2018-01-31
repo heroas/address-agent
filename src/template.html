@@ -38,7 +38,7 @@
             </v-btn>
             <v-card>
               <v-card-title>
-                <span class="headline">Add</span>
+                <span class="headline">Add Address</span>
               </v-card-title>
               <v-card-text>
                 <v-container grid-list-md>
@@ -83,11 +83,13 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+
           <v-list two-line>
             <template v-for="item in addressBook">
                       <v-subheader v-if="item.header" v-text="item.header"></v-subheader>
                       <v-divider v-else-if="item.divider" v-bind:inset="item.inset"></v-divider>
-                      <v-list-tile avatar v-else v-bind:key="item.title" @click="">
+                      <v-list-tile avatar v-else v-bind:key="item.title" @click="testerButton(item)">
                         <v-list-tile-avatar>
                           <img v-bind:src="item.avatar">
                         </v-list-tile-avatar>
@@ -101,6 +103,46 @@
                       </v-list-tile>
                     </template>
           </v-list>
+
+          <v-dialog v-model="editAddress" persistent max-width="50%">
+            <v-card>
+              <v-card-title>
+                <span class="title">{{selectedAddress.address}}</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container grid-list-md text-xs-center>
+                  <v-layout row wrap>
+                    <v-flex xs12>
+                      <v-card dark color="primary">
+                        <v-card-text> {{selectedAddress.subtitle}}</v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs6>
+                      <v-card dark color="secondary">
+                        <v-card-text class="px-0">{{selectedAddress.balance}} {{selectedAddress.title}}</v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs6>
+                      <v-card dark color="green">
+                        <v-card-text class="px-0">{{selectedAddress.worth | currency}}</v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12 sm6 md5>
+                    </v-flex>
+                    <v-flex xs12>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="blue darken-1" flat @click.native="editAddress = false">Back</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-1" flat @click.native="editAddress = false">Remove</v-btn>
+
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
           <v-snackbar color="cyan" multi-line v-model="snackbar">
             {{ snackBarText }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
