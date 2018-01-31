@@ -89,7 +89,7 @@
             <template v-for="item in addressBook">
                       <v-subheader v-if="item.header" v-text="item.header"></v-subheader>
                       <v-divider v-else-if="item.divider" v-bind:inset="item.inset"></v-divider>
-                      <v-list-tile avatar v-else v-bind:key="item.title" @click="testerButton(item)">
+                      <v-list-tile avatar v-else v-bind:key="item.title" @click="editAddress(item)">
                         <v-list-tile-avatar>
                           <img v-bind:src="item.avatar">
                         </v-list-tile-avatar>
@@ -104,7 +104,7 @@
                     </template>
           </v-list>
 
-          <v-dialog v-model="editAddress" persistent max-width="50%">
+          <v-dialog v-model="editAddressDialog" persistent max-width="50%">
             <v-card>
               <v-card-title>
                 <span class="title">{{selectedAddress.address}}</span>
@@ -135,9 +135,9 @@
                 </v-container>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="blue darken-1" flat @click.native="editAddress = false">Back</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="editAddressDialog = false">Back</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="red darken-1" flat @click.native="editAddress = false">Remove</v-btn>
+                <v-btn color="red darken-1" flat @click.native="editAddressDialog = false">Remove</v-btn>
 
               </v-card-actions>
             </v-card>

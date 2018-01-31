@@ -14,7 +14,7 @@ export default {
     return {
       importedJson: 'x',
       addDialog: false,
-      editAddress: false,
+      editAddressDialog: false,
       newCoin: null,
       newAddress: null,
       supportedCoins: [{
@@ -108,6 +108,11 @@ export default {
       this.snackbar = true
       this.addDialog = false
     },
+    editAddress(address){
+      console.log(address)
+      this.selectedAddress = address;
+      this.editAddressDialog = true;
+    },
     searchForCoin(coinSymbol) {
       var i = null;
       for (i = 0; this.supportedCoins.length > i; i += 1) {
@@ -152,16 +157,14 @@ export default {
       }
 
     },
-    testerButton(address) {
+    testerButton() {
       // console.log(this.addressBook[0].avatar);
       // console.log(this.addressBook[0].address);
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
       console.log(this.addressBook)
-      console.log(address)
-      this.selectedAddress = address;
-      this.editAddress = true;
+
       // this.total = 0;
       // for (var i = 0, len = this.addressBook.length; i < len; i++) {
       //   if (!this.addressBook[i].divider) {
