@@ -33,11 +33,10 @@
           <v-btn color="red" @click="testerButton" dark absolute bottom left>
             <v-icon>add</v-icon>
           </v-btn>
-
+          <v-btn color="green" dark absolute bottom right @click="addDialog = true">
+            <v-icon>add</v-icon>
+          </v-btn>
           <v-dialog v-model="addDialog" persistent max-width="500px">
-            <v-btn color="green" dark absolute bottom right slot="activator">
-              <v-icon>add</v-icon>
-            </v-btn>
             <v-card>
               <v-card-title>
                 <span class="headline">Add Address</span>
@@ -49,16 +48,13 @@
 
                       <v-select label="Coin" v-bind:items="supportedCoins" v-model="newCoin" item-text="symbol" item-value="symbol" chips required max-height="auto" autocomplete>
                         <template slot="selection" slot-scope="data">
-                            <v-chip @input="data.parent.selectItem(data.item)" :selected="data.selected" class="chip--select-multi" :key="JSON.stringify(data.item)">
+                            <v-chip @input="data.parent.selectItem(data.item)" :selected="data.selected" >
                               <v-avatar> <img :src="data.item.avatar"></v-avatar>
                                 {{ data.item.symbol }}
                             </v-chip>
                         </template>
                         <template slot="item" slot-scope="data">
-                          <template v-if="typeof data.item !== 'object'">
-                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                          </template>
-                        <template v-else>
+                          <template>
                             <v-list-tile-avatar>
                               <img v-bind:src="data.item.avatar"/>
                             </v-list-tile-avatar>
@@ -81,7 +77,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click.native="addDialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="addAddress(newCoin,newAddress)">Add</v-btn>
+                <v-btn color="green darken-1" flat @click.native="addAddress(newCoin,newAddress)">Add</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -92,6 +88,9 @@
                       <v-subheader v-if="address.header" v-text="address.header"></v-subheader>
                       <v-divider v-else-if="address.divider" v-bind:inset="address.inset"></v-divider>
                       <v-list-tile avatar v-else v-bind:key="address.symbol" @click="editAddress(address)">
+                        <v-list-tile-avatar>
+                          <span class="title">{{address.position}}</span>
+                        </v-list-tile-avatar>
                         <v-list-tile-avatar>
                           <img v-bind:src="address.avatar">
                         </v-list-tile-avatar>
@@ -145,10 +144,15 @@
             </v-card>
           </v-dialog>
 
+          <v-alert color="error" icon="warning" value="true">
+               Error retrieving balance from address. Check if correct.
+            </v-alert>
+
           <v-snackbar color="cyan" multi-line v-model="snackbar">
             {{ snackBarText }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
           </v-snackbar>
+
         </v-card-text>
       </v-layout>
     </v-container>

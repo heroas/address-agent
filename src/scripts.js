@@ -96,7 +96,8 @@ export default {
         "name": coinInfo.name,
         "address": address,
         "worth": 0,
-        "balance": 0
+        "balance": 0,
+        "position": 0
       });
       this.addressBook.push({
         "divider": true,
@@ -116,7 +117,7 @@ export default {
     removeAddress(){
       var i = null;
       for (i = 0; this.addressBook.length > i; i += 1) {
-        if (this.addressBook[i].address === this.selectedAddress.address) {
+        if (this.addressBook[i].position === this.selectedAddress.position) {
           this.addressBook.splice(i,1)
         }
       }
@@ -133,10 +134,14 @@ export default {
     },
     getValueOfAddressBook() {
       this.total = 0;
+      var position = 1;
       for (var i = 0, len = this.addressBook.length; i < len; i++) {
         if (!this.addressBook[i].divider) {
           console.log(this.addressBook[i]);
+          this.addressBook[i].position = position;
+
           this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].name, i);
+            position++;        
           console.log(this.addressBook)
         }
       }
@@ -152,6 +157,8 @@ export default {
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
               this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
+          },error =>{
+            console.log('Bad Address '+bookPosition)
           });
       }
       if (coinName === 'Bitcoin') {
@@ -163,6 +170,8 @@ export default {
               this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
               this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
+          },error =>{
+            console.log('Bad Address '+bookPosition)
           });
       }
 
