@@ -16,5 +16,8 @@ export default {
           return false;
       }
     }
+  },
+  buildErrorMessage(address, coinSymbol) {
+    return 'Error retrieving balance from ' + coinSymbol + ' address: ' + address + '. Check if correct.';
   }
 }

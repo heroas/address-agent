@@ -34,7 +34,9 @@ export default {
       test2: '',
       total: 0,
       snackbar: false,
-      snackBarText: ''
+      snackBarText: '',
+      error: false,
+      errorMessages: []
     }
   },
   methods: {
@@ -141,7 +143,7 @@ export default {
           this.addressBook[i].position = position;
 
           this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].name, i);
-            position++;        
+            position++;
           console.log(this.addressBook)
         }
       }
@@ -158,7 +160,8 @@ export default {
               this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
           },error =>{
-            console.log('Bad Address '+bookPosition)
+            this.errorMessages.push(Utilities.buildErrorMessage(address,coinName))
+            this.error = true;
           });
       }
       if (coinName === 'Bitcoin') {
@@ -171,7 +174,8 @@ export default {
               this.total += parseFloat(this.addressBook[bookPosition].worth);
             })
           },error =>{
-            console.log('Bad Address '+bookPosition)
+            this.errorMessages.push(Utilities.buildErrorMessage(address,coinName))
+            this.error = true;
           });
       }
 

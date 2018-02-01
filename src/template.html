@@ -144,8 +144,10 @@
             </v-card>
           </v-dialog>
 
-          <v-alert color="error" icon="warning" value="true">
-               Error retrieving balance from address. Check if correct.
+          <v-alert color="error" icon="warning" value="error" v-model="error" dismissible>
+            <template v-for="error in errorMessages">
+              {{error}}
+            </template>
             </v-alert>
 
           <v-snackbar color="cyan" multi-line v-model="snackbar">
