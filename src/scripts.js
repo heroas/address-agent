@@ -29,7 +29,7 @@ export default {
         }
       ],
       addressBook: [],
-      selectedAddress : {},
+      selectedAddress: {},
       test: '',
       test2: '',
       total: 0,
@@ -56,13 +56,12 @@ export default {
         vm.importedJson = reader.result;
         try {
           var parsedJson = JSON.parse(vm.importedJson)
-          if (Utilities.checkIfAddressBook(parsedJson)){
+          if (Utilities.checkIfAddressBook(parsedJson)) {
             this.addressBook = parsedJson;
             this.snackBarText = "Address book succesfully imported!"
             this.snackbar = true
             this.getValueOfAddressBook();
-          }
-          else{
+          } else {
             console.log('Not an addressBook')
           }
         } catch (e) {
@@ -73,12 +72,11 @@ export default {
       reader.readAsText(file);
     },
     saveCookie() {
-      try{
+      try {
         this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
         this.snackBarText = "Address book succesfully saved to the browser!"
         this.snackbar = true
-      }
-      catch(e){
+      } catch (e) {
 
       }
     },
@@ -111,16 +109,16 @@ export default {
       this.snackbar = true
       this.addDialog = false
     },
-    editAddress(address){
+    editAddress(address) {
       console.log(address)
       this.selectedAddress = address;
       this.editAddressDialog = true;
     },
-    removeAddress(){
+    removeAddress() {
       var i = null;
       for (i = 0; this.addressBook.length > i; i += 1) {
         if (this.addressBook[i].position === this.selectedAddress.position) {
-          this.addressBook.splice(i,1)
+          this.addressBook.splice(i, 1)
         }
       }
       this.editAddressDialog = false;
@@ -143,41 +141,27 @@ export default {
           this.addressBook[i].position = position;
 
           this.getValueOfAddress(this.addressBook[i].address, this.addressBook[i].name, i);
-            position++;
+          position++;
           console.log(this.addressBook)
         }
       }
 
     },
     getValueOfAddress(address, coinName, bookPosition) {
-      if (coinName === 'Ethereum') {
-        BlockchainApis.ethApi(address)
-          .then(response => {
-            var balance = CryptoConverter.getEthBalance(response.data.result);
-            CoinToUsd.getUsd(coinName).then(response => {
-              this.addressBook[bookPosition].balance = balance.toFixed(2);
-              this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
-              this.total += parseFloat(this.addressBook[bookPosition].worth);
-            })
-          },error =>{
-            this.errorMessages.push(Utilities.buildErrorMessage(address,coinName))
-            this.error = true;
-          });
-      }
-      if (coinName === 'Bitcoin') {
-        BlockchainApis.btcApi(address)
-          .then(response => {
-            var balance = CryptoConverter.getBtcBalance(response.data.balance);
-            CoinToUsd.getUsd(coinName).then(response => {
-              this.addressBook[bookPosition].balance = balance.toFixed(2);
-              this.addressBook[bookPosition].worth = (response.data[0].price_usd * balance).toFixed(2);
-              this.total += parseFloat(this.addressBook[bookPosition].worth);
-            })
-          },error =>{
-            this.errorMessages.push(Utilities.buildErrorMessage(address,coinName))
-            this.error = true;
-          });
-      }
+
+console.log(address);
+      BlockchainApis.api(address, coinName)
+        .then(response => {
+          console.log(response)
+          this.addressBook[bookPosition].balance = response.data.balance;
+          this.addressBook[bookPosition].worth = response.data.worth;
+          this.total += parseFloat(this.addressBook[bookPosition].worth);
+        }, error => {
+          this.errorMessages.push(Utilities.buildErrorMessage(address, coinName))
+          this.error = true;
+        });
+
+
 
     },
     testerButton() {
