@@ -1,8 +1,5 @@
 import axios from 'axios';
 import BlockchainApis from './services/blockchainApis'
-import CryptoConverter from './services/cryptoConverter'
-import CoinToUsd from './services/balanceToUsd'
-import Utilities from './services/utilities'
 
 export default {
   data() {
@@ -148,8 +145,6 @@ export default {
 
     },
     getValueOfAddress(address, coinName, bookPosition) {
-
-console.log(address);
       BlockchainApis.api(address, coinName)
         .then(response => {
           console.log(response)
