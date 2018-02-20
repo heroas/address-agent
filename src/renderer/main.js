@@ -17,8 +17,8 @@ Vue.use(VueCurrencyFilter,
   symbolSpacing: true
 })
 Vue.use(VueCookies)
-
+if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 new Vue({
-  el: '#app',
-  render: h => h(App)
-})
+  components: { App },
+  template: '<App/>'
+}).$mount('#app')
