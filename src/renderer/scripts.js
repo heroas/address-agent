@@ -1,11 +1,12 @@
 import axios from 'axios';
 import BlockchainApis from './services/blockchainApis'
+import Utilities from './services/utilities'
 
 export default {
   data() {
     let icons = {
-      'BTC': '../public/btc.png',
-      'ETH': '../public/eth.png'
+      'BTC': './public/btc.png',
+      'ETH': './public/eth.png'
     }
 
     return {

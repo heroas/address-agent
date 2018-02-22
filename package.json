@@ -6,8 +6,9 @@
   "private": true,
   "main": "./dist/electron/main.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
-    "build": "node .electron-vue/electron-build.js && electron-builder"
+    "build": "node .electron-vue/electron-build.js && electron-builder",
+    "dev": "node .electron-vue/dev-runner.js",
+    "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/electron-build.js"
   },
   "build": {
     "productName": "address-agent",
