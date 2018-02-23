@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "electron-json-storage": "^4.0.2",
     "mdi": "^2.1.19",
     "querystring": "^0.2.0",
     "vue": "^2.5.3",

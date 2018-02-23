@@ -1,6 +1,8 @@
 import axios from 'axios';
 import BlockchainApis from './services/blockchainApis'
 import Utilities from './services/utilities'
+const storage = require('electron-json-storage');
+
 
 export default {
   data() {
@@ -71,12 +73,19 @@ export default {
     },
     saveCookie() {
       try {
-        this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
-        this.snackBarText = "Address book succesfully saved to the browser!"
+        storage.set('addressBook', this.addressBook, function(error) {
+          if (error) throw error;
+        });
+        this.snackBarText = "Address book succesfully saved!"
         this.snackbar = true
       } catch (e) {
-
+        console.log(e);
       }
+    },
+    getLocalAddressBook(addressBook) {
+      console.log(addressBook);
+      this.addressBook = addressBook;
+      this.getValueOfAddressBook();
     },
     exportAddressBook() {
       this.test = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.addressBook));
@@ -166,7 +175,22 @@ export default {
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
-      console.log(this.addressBook)
+
+
+      // storage.setDataPath();
+      // const defaultDataPath = storage.getDefaultDataPath()
+
+
+
+
+
+
+      // session.defaultSession.cookies.get({}, (error, cookies) => {
+      //   console.log(error, cookies)
+      //   this.test = cookies;
+      // })
+
+      console.log('this.test')
 
       // this.total = 0;
       // for (var i = 0, len = this.addressBook.length; i < len; i++) {
@@ -180,12 +204,22 @@ export default {
     }
   },
   created: function() {
-    this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
-    if (this.addressBook) {
-      this.getValueOfAddressBook();
-    } else {
-      this.addressBook = [];
-    }
+    // this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
+    var func = this.getLocalAddressBook;
+    storage.get('addressBook', function(error, data) {
+      if (error) throw error;
+      func(data);
+    });
+    // setTimeout(function() {
+    //   func(x);
+    // }, 2000);
+    // this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
+    //
+    // if (this.addressBook) {
+    //   this.getValueOfAddressBook();
+    // } else {
+    //   this.addressBook = [];
+    // }
     // var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
     // BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
     //   .then(response => {
