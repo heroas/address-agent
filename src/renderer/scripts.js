@@ -175,21 +175,13 @@ export default {
       // var x=  this.$cookies.set('addressBook', JSON.stringify(this.addressBook))
       // this.$cookies.isKey(keyName)
       // console.log(x)
-
-
       // storage.setDataPath();
       // const defaultDataPath = storage.getDefaultDataPath()
-
-
-
-
-
 
       // session.defaultSession.cookies.get({}, (error, cookies) => {
       //   console.log(error, cookies)
       //   this.test = cookies;
       // })
-
       console.log('this.test')
 
       // this.total = 0;

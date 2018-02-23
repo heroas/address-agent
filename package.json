@@ -50,7 +50,6 @@
     "mdi": "^2.1.19",
     "querystring": "^0.2.0",
     "vue": "^2.5.3",
-    "vue-cookies": "^1.5.4",
     "vue-currency-filter": "^2.1.0",
     "vue-electron": "^1.0.6",
     "vuetify": "^0.17.4"
