@@ -1,5 +1,6 @@
 import axios from 'axios';
 var querystring = require('querystring');
+const baseURL = 'https://rocky-bayou-30254.herokuapp.com/'
 
 export default {
   api(address, coinName) {
@@ -10,10 +11,10 @@ export default {
     }
     switch (coinName) {
       case 'Ethereum':
-        return axios.post('http://localhost:8001/getEthAmtFromAddress', querystring.stringify(data));
+        return axios.post(baseURL + 'getEthAmtFromAddress', querystring.stringify(data));
         break;
       case 'Bitcoin':
-        return axios.post('http://localhost:8001/getBtcAmtFromAddress', querystring.stringify(data));
+        return axios.post(baseURL + 'getBtcAmtFromAddress', querystring.stringify(data));
         break;
       default:
         return 'ya dun goofed'
