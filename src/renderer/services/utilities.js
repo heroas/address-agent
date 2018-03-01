@@ -18,5 +18,30 @@ export default {
   },
   buildErrorMessage(address, coinSymbol) {
     return 'Error retrieving balance from ' + coinSymbol + ' address: ' + address + '. Check if correct.';
+  },
+  supportedCoins() {
+    let icons = {
+      'BTC': './public/btc.png',
+      'ETH': './public/eth.png',
+      'XRP': './public/xrp.png'
+    }
+
+    
+    return [{
+        symbol: 'BTC',
+        name: 'Bitcoin',
+        avatar: icons['BTC']
+      },
+      {
+        symbol: 'ETH',
+        name: 'Ethereum',
+        avatar: icons['ETH']
+      },
+      {
+        symbol: 'XRP',
+        name: 'Ripple',
+        avatar: icons['XRP']
+      }
+    ];
   }
 }

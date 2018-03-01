@@ -6,34 +6,13 @@ const storage = require('electron-json-storage');
 
 export default {
   data() {
-    let icons = {
-      'BTC': './public/btc.png',
-      'ETH': './public/eth.png',
-      'XRP': './public/xrp.png'
-    }
-
     return {
       importedJson: 'x',
       addDialog: false,
       editAddressDialog: false,
       newCoin: null,
       newAddress: null,
-      supportedCoins: [{
-          symbol: 'BTC',
-          name: 'Bitcoin',
-          avatar: icons['BTC']
-        },
-        {
-          symbol: 'ETH',
-          name: 'Ethereum',
-          avatar: icons['ETH']
-        },
-        {
-          symbol: 'XRP',
-          name: 'Ripple',
-          avatar: icons['XRP']
-        }
-      ],
+      supportedCoins: Utilities.supportedCoins(),
       addressBook: [],
       selectedAddress: {},
       test: '',
