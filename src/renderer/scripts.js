@@ -58,7 +58,7 @@ export default {
     },
     saveCookie() {
       try {
-        storage.set('addressBook', this.addressBook, function(error) {
+        storage.set('addressBook', this.addressBook, function (error) {
           if (error) throw error;
         });
         this.snackBarText = "Address book succesfully saved!"
@@ -69,8 +69,15 @@ export default {
     },
     getLocalAddressBook(addressBook) {
       console.log(addressBook);
-      this.addressBook = addressBook;
-      this.getValueOfAddressBook();
+      var empty = Object.keys(addressBook).length == 0;
+
+      if(empty){
+        this.addressBook = [];
+      }
+      else{
+        this.addressBook = addressBook;
+        this.getValueOfAddressBook();
+      }
     },
     exportAddressBook() {
       this.test = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.addressBook));
@@ -82,6 +89,7 @@ export default {
     addAddress(coin, address) {
       var coinInfo = this.searchForCoin(coin);
 
+      console.log(this.addressBook);
       this.addressBook.push({
         "avatar": coinInfo.avatar,
         "symbol": coinInfo.symbol,
@@ -180,10 +188,11 @@ export default {
       //console.log(this.test2);
     }
   },
-  created: function() {
+  created: function () {
     // this.addressBook = JSON.parse(this.$cookies.get('addressBook'));
+    this.addAddressBook = [];
     var func = this.getLocalAddressBook;
-    storage.get('addressBook', function(error, data) {
+    storage.get('addressBook', function (error, data) {
       if (error) throw error;
       func(data);
     });
