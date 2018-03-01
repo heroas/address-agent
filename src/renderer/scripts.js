@@ -8,7 +8,8 @@ export default {
   data() {
     let icons = {
       'BTC': './public/btc.png',
-      'ETH': './public/eth.png'
+      'ETH': './public/eth.png',
+      'XRP': './public/xrp.png'
     }
 
     return {
@@ -26,6 +27,11 @@ export default {
           symbol: 'ETH',
           name: 'Ethereum',
           avatar: icons['ETH']
+        },
+        {
+          symbol: 'XRP',
+          name: 'Ripple',
+          avatar: icons['XRP']
         }
       ],
       addressBook: [],

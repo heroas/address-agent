@@ -16,6 +16,9 @@ export default {
       case 'Bitcoin':
         return axios.post(baseURL + 'getBtcAmtFromAddress', querystring.stringify(data));
         break;
+      case 'Ripple':
+        return axios.post(baseURL + 'getXrpAmtFromAddress', querystring.stringify(data));
+        break;
       default:
         return 'ya dun goofed'
     }
