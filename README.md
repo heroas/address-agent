@@ -13,7 +13,7 @@ An app that will fetch the balance of each address givin to it from the blockcha
 ## Supported Blockchains
 * Ethereum
 * Ripple
-* Bitcoin (need a better api for this :unamused:)
+* Bitcoin
 
 ## Ingredients
 Veutify + electron = :heart:

@@ -197,7 +197,9 @@ export default {
     // } else {
     //   this.addressBook = [];
     // }
-    // var final = '1vt8pHdYHpbZ7rgXFfiXm3uxaeVx1Yzjd'
+
+    //rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn
+    // var final = '12pTc7twZ2T1BHv4zJHHSpHQn7XLUivMx4'
     // BlockchainApis.ethApi('0x1Ae4c1aC38BE9110bDb4cc19eC15Bbf7172F8157')
     //   .then(response => {
     //     var balance = CryptoConverter.getEthBalance(response.data.balance);
