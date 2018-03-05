@@ -35,13 +35,13 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "public/icon.ico"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "public/icon.ico"
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "public/icon.ico"
     }
   },
   "dependencies": {
