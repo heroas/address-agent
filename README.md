@@ -14,6 +14,7 @@ An app that will fetch the balance of each address givin to it from the blockcha
 * Ethereum
 * Ripple
 * Bitcoin
+* Ethereum Classic
 
 ## Ingredients
 Veutify + electron = :heart:
@@ -25,6 +26,7 @@ $ cd address-agent
 $ npm install
 $ npm run build
 ```
+Application is in the created build folder.
 ## Development
 ```
 $ npm run dev

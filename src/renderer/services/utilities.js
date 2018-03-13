@@ -23,10 +23,11 @@ export default {
     let icons = {
       'BTC': './public/btc.png',
       'ETH': './public/eth.png',
-      'XRP': './public/xrp.png'
+      'XRP': './public/xrp.png',
+      'ETC': './public/etc.png'
     }
 
-    
+
     return [{
         symbol: 'BTC',
         name: 'Bitcoin',
@@ -41,6 +42,11 @@ export default {
         symbol: 'XRP',
         name: 'Ripple',
         avatar: icons['XRP']
+      },
+      {
+        symbol: 'ETC',
+        name: 'Ethereum-Classic',
+        avatar: icons['ETC']
       }
     ];
   }

@@ -19,6 +19,9 @@ export default {
       case 'Ripple':
         return axios.post(baseURL + 'getXrpAmtFromAddress', querystring.stringify(data));
         break;
+      case 'Ethereum-Classic':
+        return axios.post(baseURL + 'getEtcAmtFromAddress', querystring.stringify(data));
+        break;
       default:
         return 'ya dun goofed'
     }
