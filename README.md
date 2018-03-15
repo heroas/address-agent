@@ -4,7 +4,7 @@ A multicoin blockchain balance fetcher :mask:
 
 ![alt text][screenshot]
 
-[screenshot]: https://i.imgur.com/w1hQi93.png "screenshot"
+[screenshot]: https://i.imgur.com/esqQIGD.png "screenshot"
 
 ## What??
 An app that will fetch the balance of each address givin to it from the blockchain. Can be used to keep track of the balances in multiple wallets for multiple coins.
