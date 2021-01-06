@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "axios": ">=0.18.1",
+    "axios": ">=0.21.1",
     "electron-json-storage": "^4.0.2",
     "mdi": "^2.1.19",
     "querystring": "^0.2.0",
